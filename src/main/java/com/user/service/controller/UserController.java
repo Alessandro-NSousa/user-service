@@ -49,4 +49,15 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<User> delete(@PathVariable Integer id) {
+        try {
+            this.userService.delete(id);
+            return ResponseEntity.noContent().build();
+
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

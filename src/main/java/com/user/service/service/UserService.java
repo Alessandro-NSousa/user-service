@@ -34,4 +34,11 @@ public class UserService {
 
        return userRepository.save(user);
     }
+
+    @Transactional
+    public void delete(Integer id) {
+        userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        userRepository.deleteById(id);
+    }
 }
