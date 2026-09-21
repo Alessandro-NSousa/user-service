@@ -2,6 +2,7 @@ package com.user.service.service;
 
 import com.user.service.model.User;
 import com.user.service.repository.UserRepository;
+import com.user.service.service.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ public class UserService {
     }
 
     public User findById(Integer id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Transactional
     public User update(Integer id, User data) {
-       var user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+       var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 
        if (data.getName() != null)
         user.setName(data.getName());
@@ -37,7 +38,7 @@ public class UserService {
 
     @Transactional
     public void delete(Integer id) {
-        userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         userRepository.deleteById(id);
     }

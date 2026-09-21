@@ -3,6 +3,8 @@ package com.user.service.controller;
 import com.user.service.model.User;
 import com.user.service.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping(path = "/v1/user")
 @RequiredArgsConstructor
 public class UserController {
+
+    private final Logger log = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 
@@ -35,6 +40,7 @@ public class UserController {
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         }catch (Exception e){
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -46,6 +52,7 @@ public class UserController {
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         }catch (Exception e){
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -57,6 +64,7 @@ public class UserController {
             return ResponseEntity.noContent().build();
 
         }catch (Exception e){
+            log.error(e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }
