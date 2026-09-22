@@ -24,48 +24,30 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> finAll() {
-        try {
-          var users = this.userService.findAll();
-          return new ResponseEntity<>(users, HttpStatus.OK);
 
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+      var users = this.userService.findAll();
+      return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<User> findById(@PathVariable Integer id) {
-        try {
-            var user = this.userService.findById(id);
-            return new ResponseEntity<>(user, HttpStatus.OK);
 
-        }catch (Exception e){
-            log.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        var user = this.userService.findById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+
+
     }
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User data) {
-        try {
-            var user = this.userService.update(id, data);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-
-        }catch (Exception e){
-            log.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        var user = this.userService.update(id, data);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<User> delete(@PathVariable Integer id) {
-        try {
-            this.userService.delete(id);
-            return ResponseEntity.noContent().build();
+        this.userService.delete(id);
+        return ResponseEntity.noContent().build();
 
-        }catch (Exception e){
-            log.error(e.getMessage());
-            return ResponseEntity.notFound().build();
-        }
     }
 }
